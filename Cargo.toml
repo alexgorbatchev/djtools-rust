@@ -7,7 +7,7 @@ license = "MIT"
 description = "Native Engine DJ, Rekordbox XML and Serato collection interchange"
 
 [dependencies]
-engine-library = { path = "../engine-cli/crates/engine-library" }
+engine-library = { git = "https://github.com/alexgorbatchev/engine-cli-rust.git", rev = "ffe3fa7812b4b9cd73b1d661062e621c7adfead4" }
 base64 = "0.22"
 chrono = { version = "0.4", features = ["serde"] }
 lofty = "0.25"

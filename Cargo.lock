@@ -58,6 +58,7 @@ checksum = "1505bd5d3d116872e7271a6d4e16d81d0c8570876c8de68093a09ac269d8aac0"
 [[package]]
 name = "audio-chromaprint"
 version = "0.1.0"
+source = "git+https://github.com/alexgorbatchev/chromaprint-rust.git?rev=3a4dc41e907b031ff6932ad322756a2623470fbf#3a4dc41e907b031ff6932ad322756a2623470fbf"
 dependencies = [
  "base64 0.23.1",
  "rustfft",
@@ -68,6 +69,7 @@ dependencies = [
 [[package]]
 name = "audio-metadata"
 version = "0.1.0"
+source = "git+https://github.com/alexgorbatchev/fetch-track-cli-rust.git?rev=ceef80acf7b50cf2b156a2b7658f780234169cfc#ceef80acf7b50cf2b156a2b7658f780234169cfc"
 dependencies = [
  "audio-chromaprint",
  "chrono",
@@ -227,6 +229,7 @@ dependencies = [
 [[package]]
 name = "cli-deps"
 version = "0.1.0"
+source = "git+https://github.com/alexgorbatchev/deps-rust.git?rev=6aef62e44a87f65d31283a77b93925f456362069#6aef62e44a87f65d31283a77b93925f456362069"
 dependencies = [
  "async-trait",
  "dirs",
@@ -417,6 +420,7 @@ checksum = "0e9c71c2167ca323c882b99918929403426e2373ea17242ff5653e0d5e1058be"
 [[package]]
 name = "engine-library"
 version = "0.1.0"
+source = "git+https://github.com/alexgorbatchev/engine-cli-rust.git?rev=ffe3fa7812b4b9cd73b1d661062e621c7adfead4#ffe3fa7812b4b9cd73b1d661062e621c7adfead4"
 dependencies = [
  "audio-metadata",
  "base64 0.22.1",
@@ -1896,6 +1900,7 @@ dependencies = [
 [[package]]
 name = "shazam-client"
 version = "0.1.0"
+source = "git+https://github.com/alexgorbatchev/shazam-rust.git?rev=045a7341bdc14613848e616feb3d5f7bc38e5bab#045a7341bdc14613848e616feb3d5f7bc38e5bab"
 dependencies = [
  "base64 0.23.1",
  "crc32fast",

@@ -36,7 +36,7 @@ This Rust package is unpublished. From a consumer beside this local checkout:
 cargo add djtools --path ../djtools
 ```
 
-Keep the sibling `engine-library` and its `audio-metadata` dependency available. Contributor commands are in [AGENTS.md](AGENTS.md).
+Cargo fetches `engine-library` and its transitive dependencies from pinned GitHub revisions. Contributor commands are in [AGENTS.md](AGENTS.md).
 
 # Quick Start
 
