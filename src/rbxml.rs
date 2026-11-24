@@ -41,8 +41,10 @@ impl Document {
             },
         }
     }
+    /// Parse one document, allowing trailing XML whitespace but no extra content.
     pub fn from_xml(xml: &str) -> Result<Self> {
-        let mut de = quick_xml::de::Deserializer::from_str(xml);
+        let mut de =
+            quick_xml::de::Deserializer::from_str(xml.trim_end_matches([' ', '\t', '\r', '\n']));
         let Root::Document(document) = Root::deserialize(&mut de)?;
         if !de.is_empty() {
             return Err(Error::Invalid("trailing XML document content".into()));

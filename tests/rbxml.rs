@@ -4,6 +4,19 @@ use djtools::{
 };
 
 #[test]
+fn document_whitespace_after_root_is_valid_but_extra_content_is_rejected() {
+    let xml = Document::new().to_xml().unwrap();
+    for suffix in ["\n", "\r\n", " \t\r\n", "\n\n"] {
+        let document = Document::from_xml(&format!("{xml}{suffix}")).unwrap();
+        assert!(document.collection.tracks.is_empty());
+        assert_eq!(document.playlists.node.name, "ROOT");
+    }
+    for suffix in ["\nextra", "\n<DJ_PLAYLISTS/>", "\u{a0}", "\u{b}"] {
+        assert!(Document::from_xml(&format!("{xml}{suffix}")).is_err());
+    }
+}
+
+#[test]
 fn xml_roundtrip_uses_native_uri_dates_memory_cues_and_no_mp3_offset_drift() {
     std::fs::create_dir_all(".tmp").unwrap();
     let dir = tempfile::tempdir_in(".tmp").unwrap();
