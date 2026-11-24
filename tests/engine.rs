@@ -76,10 +76,7 @@ fn native_analysis_grid_math_original_selection_and_corruption_are_checked() {
         ..TrackRecord::default()
     })
     .unwrap();
-    let mut beats = BeatData::decode(include_bytes!(
-        "../../engine-cli/crates/engine-library/tests/fixtures/beat-data.bin"
-    ))
-    .unwrap();
+    let mut beats = BeatData::decode(include_bytes!("fixtures/beat-data.bin")).unwrap();
     beats.sample_rate = 44100.0;
     beats.original[0].samples = 0.0;
     beats.original[0].beat = 0;

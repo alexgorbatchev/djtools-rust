@@ -1,6 +1,6 @@
 ---
 created_on: 2026-10-14 18:19
-last_modified: 2026-10-14 18:19
+last_modified: 2026-11-23 21:42
 status: current
 ---
 
@@ -16,7 +16,7 @@ Read `../AGENTS.md` and the full applicable skills before edits. This independen
 - `just fmt`: format only this package; never use `cargo fmt --all` across independent path dependencies.
 - `just doc`: generate local API documentation.
 
-Tests require `ffmpeg` on PATH for real MP3/ID3 fixtures and the sibling `engine-library` checkout for its attributed beat-data fixture. Keep evidence and temporary files under `.tmp`.
+Tests require `ffmpeg` on PATH for real MP3/ID3 fixtures. The attributed Engine beat-data fixture is retained in `tests/fixtures/`; its provenance is recorded beside it. Keep evidence and temporary files under `.tmp`.
 
 ## Contracts
 
