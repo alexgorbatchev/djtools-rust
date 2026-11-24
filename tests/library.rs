@@ -106,7 +106,7 @@ fn nonfinite_metadata_and_broken_memberships_cannot_overwrite_a_saved_library() 
     let dir = tempfile::tempdir_in(".tmp").unwrap();
     let path = dir.path().join("library.json");
     let mut library = djtools::Library::default();
-    library.songs.push(djtools::Song {
+    library.add_song(djtools::Song {
         id: 1,
         length: 120.0,
         ..Default::default()

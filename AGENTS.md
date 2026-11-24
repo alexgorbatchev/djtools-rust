@@ -1,6 +1,6 @@
 ---
 created_on: 2026-10-14 18:19
-last_modified: 2026-11-23 21:42
+last_modified: 2026-11-23 21:48
 status: current
 ---
 
@@ -10,7 +10,7 @@ Read `../AGENTS.md` and the full applicable skills before edits. This independen
 
 ## Commands
 
-- `just check`: package-scoped format verification, strict Clippy, all-target tests with at least 90% line coverage, doctests, and strict API documentation.
+- `just check`: package-scoped format verification, strict Clippy, all-target tests with at least 90% line and function coverage, doctests, and strict API documentation.
 - `just test`: behavioral tests and API doctests.
 - `just build`: all targets.
 - `just fmt`: format only this package; never use `cargo fmt --all` across independent path dependencies.
@@ -27,7 +27,7 @@ Tests require `ffmpeg` on PATH for real MP3/ID3 fixtures. The attributed Engine 
 - Stage the complete Engine database pair before publication. Refuse active SQLite sidecars, preserve unrelated files, and retain rollback failures and backup recovery paths. Never describe two file renames as one crash-atomic transaction.
 - Preserve Serato crate membership on per-file audio errors and return explicit warnings. Keep extraction read-only; use native ID3 decoding for text encodings and generate binary/audio fixtures rather than copying externally licensed recordings.
 - Keep native XML URLs and DateModified correct, remove nested references when removing tracks, and reject unsupported meters. Use primary format references linked from README when modifying codecs.
-- Any runtime behavior change requires a corresponding behavioral test change and at least 90% line coverage; `scripts/` is excluded. Develop red/green and temporarily disable the implementation to prove the tests fail, then restore it exactly and rerun checks.
+- Any runtime behavior change requires a corresponding behavioral test change and at least 90% line and function coverage; `scripts/` is excluded. Develop red/green and temporarily disable the implementation to prove the tests fail, then restore it exactly and rerun checks.
 - Keep standing rules here and progress evidence in `.tmp`; update existing rules in place rather than appending task history.
 - Never publish releases, tags, packages, or production deployments automatically without explicit user authorization. Never test against live user collections without explicit authorization for the writes.
 

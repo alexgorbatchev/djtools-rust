@@ -19,7 +19,7 @@ lint:
 
 coverage:
     mkdir -p .tmp
-    cargo llvm-cov --all-targets --fail-under-lines 90 --json --output-path .tmp/coverage-final.json
+    cargo llvm-cov --all-targets --fail-under-lines 90 --fail-under-functions 90 --json --output-path .tmp/coverage-final.json
 
 doc:
     RUSTDOCFLAGS="-D warnings" cargo doc --no-deps

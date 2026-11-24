@@ -123,6 +123,79 @@ fn real_marker_layouts_decode_positions_names_colors_locks_and_unknown_entries()
 }
 
 #[test]
+fn malformed_marker_entries_return_errors_instead_of_partial_cues_or_panics() {
+    let mut cue = vec![0; 12];
+    cue.extend(b"Label\0");
+    let mut unterminated = cue.clone();
+    unterminated.pop();
+    let mut invalid_utf8 = vec![0; 12];
+    invalid_utf8.extend([255, 0]);
+    let mut trailing_data = cue.clone();
+    trailing_data.push(1);
+    let mut invalid_slot = cue.clone();
+    invalid_slot[1] = 255;
+    let mut truncated = chunk(b"CUE\0", &cue);
+    truncated.pop();
+    for (entry, expected) in [
+        (b"CUE".to_vec(), "unterminated entry type"),
+        (vec![255, 0], "entry type is not UTF-8"),
+        (vec![b'C', b'U', b'E', 0, 0, 0, 0], "truncated number"),
+        (truncated, "truncated entry"),
+        (chunk(b"CUE\0", &unterminated), "unterminated name"),
+        (chunk(b"CUE\0", &invalid_utf8), "name is not UTF-8"),
+        (chunk(b"CUE\0", &trailing_data), "data after name"),
+        (
+            chunk(b"CUE\0", &invalid_slot),
+            "slot exceeds portable limit",
+        ),
+    ] {
+        let mut raw = vec![1, 1];
+        raw.extend(entry);
+        let mut encoded = vec![1, 1];
+        encoded.extend(
+            base64::engine::general_purpose::STANDARD
+                .encode(raw)
+                .bytes(),
+        );
+        let error = parse_markers2(&encoded).unwrap_err().to_string();
+        assert!(error.contains(expected), "expected {expected}, got {error}");
+    }
+}
+
+#[cfg(unix)]
+#[test]
+fn non_utf8_crate_names_and_track_paths_are_rejected_without_overwriting() {
+    use std::{ffi::OsString, os::unix::ffi::OsStringExt, path::PathBuf};
+    std::fs::create_dir_all(".tmp").unwrap();
+    let dir = tempfile::tempdir_in(".tmp").unwrap();
+    let path = dir
+        .path()
+        .join(OsString::from_vec(b"bad\xff.crate".to_vec()));
+    Crate::default().write(&path).unwrap();
+    assert!(
+        Crate::read(&path)
+            .unwrap_err()
+            .to_string()
+            .contains("not UTF-8")
+    );
+    let original = std::fs::read(&path).unwrap();
+    let invalid = Crate {
+        paths: vec![PathBuf::from(OsString::from_vec(
+            b"/Music/bad\xff.mp3".to_vec(),
+        ))],
+        ..Default::default()
+    };
+    assert!(
+        invalid
+            .write(&path)
+            .unwrap_err()
+            .to_string()
+            .contains("UTF-8")
+    );
+    assert_eq!(std::fs::read(&path).unwrap(), original);
+}
+
+#[test]
 fn crates_unicode_nested_chunks_priority_dedup_and_missing_audio_warnings() {
     std::fs::create_dir_all(".tmp").unwrap();
     let dir = tempfile::tempdir_in(".tmp").unwrap();
